@@ -3,52 +3,28 @@
  * https://github.com/facebook/react-native
  */
 
-
 import React, {
   AppRegistry,
   Component,
   StyleSheet,
   Text,
-  View,
-  DeviceEventEmitter
+  View
 } from 'react-native';
 
-import Beacons from 'react-native-beacons-android'
+import MainScreen from './MainScreen'
+
+
+import { start } from './api/BeaconsApi.js'
 
 class TogglFit extends Component {
+  componentWillMount () {
+    start()
+  }
+
   render() {
-    Beacons.detectIBeacons()
-
-    // Start detecting all iBeacons in the nearby
-    Beacons.startRangingBeaconsInRegion('REGION1')
-      .then(() => console.log(`Beacons ranging started succesfully!`))
-      .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
-
-    // Monitoring
-    Beacons.startMonitoringForRegion('REGION1')
-      .then(() => console.log(`Beacons monitoring started succesfully`))
-      .catch(error => console.log(`Beacons monitoring not started, error: ${error}`))
-
-    // Print a log of the detected iBeacons (evert 1 second)
-    DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-      console.log('Found beacons!', data)
-    })
-
-    DeviceEventEmitter.addListener('regionDidEnter', (region) => {
-      console.log('Entered new beacons region!', region) // Result of monitoring
-    })
-
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+        <MainScreen />
       </View>
     );
   }
