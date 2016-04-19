@@ -19,7 +19,9 @@ export default class MainScreen extends Component {
   }
 
   onBeaconsUpdate (data) {
-    this.setState(data)
+    this.setState({
+      beacons: data
+    })
   }
 
   componentWillMount () {
@@ -30,16 +32,14 @@ export default class MainScreen extends Component {
     const {
       beacons
     } = this.state
-
     return (
       <View style={styles.trigger}>
         {
           beacons.map((beacon, index) => {
-            console.log(beacon)
             return (
               <View>
                 <Text style={styles.triggerText}>
-                  Beacon {beacon.id2}
+                  {beacon.name}
                 </Text>
               </View>
             )
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     borderColor: 'green',
     borderWidth: 5,
     backgroundColor: 'rgba(250,250,250,0.2)',
-    color: 'white',
     borderRadius: 225,
     height: 225,
     width: 225,
