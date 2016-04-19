@@ -8,6 +8,7 @@ import React, {
   Component,
   StyleSheet,
   Text,
+  Image,
   View
 } from 'react-native';
 
@@ -24,7 +25,11 @@ class TogglFit extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MainScreen />
+        <Image
+          source={require('./assets/images/bg-row.png')}
+          style={styles.backgroundImage}
+        />
+        <MainScreen style={styles.trigger} />
       </View>
     );
   }
@@ -35,7 +40,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'black',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: Image.resizeMode.contain,
+    opacity: 0.6
   },
   welcome: {
     fontSize: 20,
@@ -47,6 +65,11 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  trigger: {
+    fontSize: 500,
+    color: 'red',
+    backgroundColor: 'green'
+  }
 });
 
 AppRegistry.registerComponent('TogglFit', () => TogglFit);

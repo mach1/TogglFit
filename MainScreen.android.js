@@ -1,6 +1,7 @@
 import React, {
   Component,
   View,
+  StyleSheet,
   Text
 } from 'react-native'
 
@@ -31,17 +32,14 @@ export default class MainScreen extends Component {
     } = this.state
 
     return (
-      <View>
+      <View style={styles.trigger}>
         {
           beacons.map((beacon, index) => {
             console.log(beacon)
             return (
               <View>
-                <Text>
+                <Text style={styles.triggerText}>
                   Beacon {beacon.id2}
-                </Text>
-                <Text>
-                  {beacon.distance}
                 </Text>
               </View>
             )
@@ -51,3 +49,21 @@ export default class MainScreen extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  trigger: {
+    justifyContent: 'center',
+    padding: 10,
+    alignItems: 'center',
+    borderColor: 'green',
+    borderWidth: 5,
+    backgroundColor: 'rgba(250,250,250,0.2)',
+    color: 'white',
+    borderRadius: 225,
+    height: 225,
+    width: 225,
+  },
+  triggerText: {
+    color: 'white',
+  }
+});
