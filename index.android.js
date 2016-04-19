@@ -38,8 +38,8 @@ class TogglFit extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 60,
     backgroundColor: 'black',
   },
   backgroundImage: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     resizeMode: Image.resizeMode.contain,
-    opacity: 0.6
+    opacity: 0.3
   },
   welcome: {
     fontSize: 20,
