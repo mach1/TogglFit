@@ -35,7 +35,7 @@ const formatData = beacons => {
   return keyBy(beacons.beacons.map(beacon => {
     return {
       distance: beacon.distance.toFixed(2),
-      name: stations[beacon.id2].name,
+      name: ((stations[beacon.id2]) || {}).name,
       time: Date.now()
     }
   }).filter(isNear), 'name')

@@ -11,6 +11,10 @@ import {
   registerListener
 } from './api/BeaconsApi.js'
 
+import {
+  authenticate
+} from './api/TogglApi.js'
+
 export default class MainScreen extends Component {
   constructor (props) {
     super(props)
@@ -27,6 +31,7 @@ export default class MainScreen extends Component {
   }
 
   componentWillMount () {
+    authenticate()
     registerListener(this.onBeaconsUpdate)
   }
 
