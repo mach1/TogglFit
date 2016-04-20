@@ -2,11 +2,42 @@ import config from '../api-config.json'
 import Base64 from 'Base64'
 
 export function authenticate () {
-  fetch('https://www.toggl.com/api/v8/me', {
+  return fetch('https://www.toggl.com/api/v8/me', {
     headers: {
       'Authorization': 'Basic ' + Base64.btoa(`${config.apiKey + ':api_token'}`)
     }
   }).then(function(response) {
-    console.log(response)
+
   })
 }
+
+export function startTimeEntry (description) {
+  return fetch('https://www.toggl.com/api/v8/time_entries/start', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + Base64.btoa(`${config.apiKey + ':api_token'}`)
+    },
+    body : JSON.stringify({
+      time_entry: {
+        description,
+        created_with: 'TogglFit'
+      }
+    })
+  }).then(function(response) {
+    console.log('Started time entry:', description)
+  })
+}
+
+export function stopTimeEntry (description) {
+  return fetch('https://www.toggl.com/api/v8/time_entries/stop', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + Base64.btoa(`${config.apiKey + ':api_token'}`)
+    }
+  }).then(function(response) {
+    console.log('Stopped time entry')
+  })
+}
+
