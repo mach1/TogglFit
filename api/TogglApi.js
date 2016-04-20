@@ -26,6 +26,7 @@ export function startTimeEntry (description) {
     })
   }).then(function(response) {
     console.log('Started time entry:', description)
+    return response.json()
   })
 }
 

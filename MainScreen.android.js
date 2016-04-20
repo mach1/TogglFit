@@ -26,6 +26,15 @@ export default class MainScreen extends Component {
       timeEntryRunning: false
     }
     this.onBeaconsUpdate = this.onBeaconsUpdate.bind(this)
+    this.onManualStop = this.onManualStop.bind(this)
+    this.saveStartedTimeEntryToState = this.saveStartedTimeEntryToState.bind(this)
+  }
+
+  saveStartedTimeEntryToState (response) {
+    const startTime = new Date(response.data.start).getTime()
+    this.setState({
+      startTime
+    })
   }
 
   startTimeEntry (beacon) {
@@ -34,7 +43,7 @@ export default class MainScreen extends Component {
       beacon,
       startTime: Date.now()
     })
-    startTimeEntry(beacon.name)
+    startTimeEntry(beacon.name).then(this.saveStartedTimeEntryToState)
   }
 
   onBeaconsUpdate (beacons) {
@@ -54,6 +63,12 @@ export default class MainScreen extends Component {
     registerListener(this.onBeaconsUpdate)
   }
 
+  onManualStop () {
+    this.refs.view.bounce(800).then((endState) => {
+      this.setState({borderColor: this.state.borderColor == 'green' ? 'red' : 'green'})
+    })
+  }
+
   render () {
     const {
       beacons,
@@ -63,9 +78,12 @@ export default class MainScreen extends Component {
 
     var toggl = true
 
+    const seconds = moment().diff(startTime, 'seconds')
+    const time = moment().startOf('day').seconds(seconds).format('mm:ss')
+
     const styles = StyleSheet.create({
       triggerBackground: {
-        borderColor: this.state.borderColor || 'red',
+        borderColor: this.state.timeEntryRunning ? 'green' : 'red',
         borderWidth: 2.5,
         height: 225,
         borderRadius: 225,
@@ -118,26 +136,25 @@ export default class MainScreen extends Component {
       }
     });
 
-
     return (
       <View>
       {toggl &&
         <Animatable.View ref="view" transition='borderColor' easing='ease-out' style={styles.triggerBackground} >
-            <TouchableOpacity activeOpacity={0.6} style={styles.trigger} onPress={() => this.refs.view.bounce(800).then((endState) => this.setState({borderColor: this.state.borderColor == 'green' ? 'red' : 'green'})) }>
+            <TouchableOpacity activeOpacity={0.6} style={styles.trigger} onPress={this.onManualStop}>
               <Text style={styles.stationText}>
                 {beacon.name || 'Not running'}
               </Text>
               <Animatable.Text style={styles.triggerText}>
-                {moment().diff(startTime, 'seconds')}
+                {time}
               </Animatable.Text>
-            </TouchableOpacity>      
+            </TouchableOpacity>
         </Animatable.View>
       }
       {!toggl &&
         <View>
           <Text style={styles.reportLabel}>
             APRIL, 25. 2016
-          </Text>  
+          </Text>
           <View>
             <View style={styles.report}>
               <View style={styles.reportIcon}>
