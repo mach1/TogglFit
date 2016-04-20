@@ -9,6 +9,7 @@
     "Base64": "^0.3.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.11.1",
+    "moment": "^2.13.0",
     "react": "^0.14.8",
     "react-native": "^0.23.1",
     "react-native-animatable": "^0.5.2",

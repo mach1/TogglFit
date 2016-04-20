@@ -8,15 +8,9 @@ import React, {
 } from 'react-native'
 
 import Animatable from 'react-native-animatable'
-
-import {
-  minBy
-} from 'lodash'
-
-import {
-  registerListener
-} from './api/BeaconsApi.js'
-
+import { minBy } from 'lodash'
+import { registerListener } from './api/BeaconsApi.js'
+import moment from 'moment'
 import {
   authenticate,
   startTimeEntry,
@@ -28,6 +22,7 @@ export default class MainScreen extends Component {
     super(props)
     this.state = {
       beacons: [],
+      beacon: {},
       timeEntryRunning: false
     }
     this.onBeaconsUpdate = this.onBeaconsUpdate.bind(this)
@@ -36,7 +31,8 @@ export default class MainScreen extends Component {
   startTimeEntry (beacon) {
     this.setState({
       timeEntryRunning: true,
-      beacon
+      beacon,
+      startTime: Date.now()
     })
     startTimeEntry(beacon.name)
   }
@@ -60,7 +56,9 @@ export default class MainScreen extends Component {
 
   render () {
     const {
-      beacons
+      beacons,
+      beacon,
+      startTime
     } = this.state
 
     var toggl = true
@@ -93,6 +91,11 @@ export default class MainScreen extends Component {
         height: 200,
         width: 200,
       },
+      stationText: {
+        color: 'white',
+        fontFamily: 'Helvetica Neue Light',
+        fontSize: 24
+      },
       triggerText: {
         color: 'white',
         fontFamily: 'Helvetica Neue Light',
@@ -121,8 +124,11 @@ export default class MainScreen extends Component {
       {toggl &&
         <Animatable.View ref="view" transition='borderColor' easing='ease-out' style={styles.triggerBackground} >
             <TouchableOpacity activeOpacity={0.6} style={styles.trigger} onPress={() => this.refs.view.bounce(800).then((endState) => this.setState({borderColor: this.state.borderColor == 'green' ? 'red' : 'green'})) }>
+              <Text style={styles.stationText}>
+                {beacon.name || 'Not running'}
+              </Text>
               <Animatable.Text style={styles.triggerText}>
-                00:01
+                {moment().diff(startTime, 'seconds')}
               </Animatable.Text>
             </TouchableOpacity>      
         </Animatable.View>
