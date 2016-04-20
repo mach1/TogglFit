@@ -10,30 +10,51 @@ import React, {
 import Animatable from 'react-native-animatable'
 
 import {
+  minBy
+} from 'lodash'
+
+import {
   registerListener
 } from './api/BeaconsApi.js'
 
 import {
-  authenticate
+  authenticate,
+  startTimeEntry,
+  stopTimeEntry
 } from './api/TogglApi.js'
 
 export default class MainScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      beacons: [] 
+      beacons: [],
+      timeEntryRunning: false
     }
     this.onBeaconsUpdate = this.onBeaconsUpdate.bind(this)
   }
 
-  onBeaconsUpdate (data) {
+  startTimeEntry (beacon) {
     this.setState({
-      beacons: data
+      timeEntryRunning: true,
+      beacon
     })
+    startTimeEntry(beacon.name)
+  }
+
+  onBeaconsUpdate (beacons) {
+    this.setState({
+      beacons
+    })
+    const nearest = minBy(beacons, 'distance')
+    if (nearest && !this.state.timeEntryRunning) {
+      this.startTimeEntry(nearest)
+    } else if (nearest && this.state.beacon && this.state.beacon.id2 !== nearest.id2) {
+      stopTimeEntry()
+      this.startTimeEntry(nearest)
+    }
   }
 
   componentWillMount () {
-    authenticate()
     registerListener(this.onBeaconsUpdate)
   }
 
