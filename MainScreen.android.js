@@ -27,7 +27,8 @@ const getFormatedTime = (startTime) => {
 
 const mapBeaconDate = (beacon) => {
   return {
-    time: getFormatedTime(beacon.time)
+    time: getFormatedTime(beacon.time),
+    rawTime: moment().diff(beacon.time, 'seconds')
   }
 }
 

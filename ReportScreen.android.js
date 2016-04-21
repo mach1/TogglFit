@@ -9,6 +9,7 @@ import React, {
 
 import { getStyles } from './ReportScreen.styles.js'
 import { get } from './ExcercisesApi.js'
+import { maxBy } from 'lodash'
 
 export default class ReportScreen extends Component {
   constructor (props) {
@@ -18,13 +19,12 @@ export default class ReportScreen extends Component {
   render () {
     const styles = getStyles(this.state)
     const excercises = get().map(beacon => {
-      console.log(beacon)
       return {
         ...beacon,
         image: require('./assets/images/Dumbbell-50.png'),
       }
     })
-    console.log(excercises)
+    const maxTime = maxBy(excercises, 'rawTime').rawTime
 
     return (
       <View>
@@ -34,6 +34,7 @@ export default class ReportScreen extends Component {
           </Text>
           {
             excercises.map(excercise => {
+              const width = (maxTime * 200 / excercise.rawTime)
               return (
                 <View>
                   <View style={styles.report}>
@@ -42,7 +43,7 @@ export default class ReportScreen extends Component {
                         source={excercise.image} //excercise.image)}
                       />
                     </View>
-                    <View style={{ height: 10, borderRadius: 5, backgroundColor: '#04C5A6', marginTop: 20, marginLeft: 15, marginRight: 15, width: 200 }}>
+                    <View style={{ height: 10, borderRadius: 5, backgroundColor: '#04C5A6', marginTop: 20, marginLeft: 15, marginRight: 15, width: width}}>
                     </View>
                     <Text style={styles.reportTimer}>
                       {excercise.time}
