@@ -30,8 +30,8 @@ export function startTimeEntry (description) {
   })
 }
 
-export function stopTimeEntry (description) {
-  return fetch('https://www.toggl.com/api/v8/time_entries/stop', {
+export function stopTimeEntry (id) {
+  return fetch(`https://www.toggl.com/api/v8/time_entries/${id}/stop`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

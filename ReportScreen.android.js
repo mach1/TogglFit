@@ -25,7 +25,6 @@ export default class ReportScreen extends Component {
       }
     })
     const maxTime = maxBy(excercises, 'rawTime').rawTime
-
     return (
       <View>
         <View>
@@ -34,7 +33,7 @@ export default class ReportScreen extends Component {
           </Text>
           {
             excercises.map(excercise => {
-              const width = (maxTime * 200 / excercise.rawTime)
+              const width = (excercise.rawTime * 200 / maxTime)
               return (
                 <View>
                   <View style={styles.report}>

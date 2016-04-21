@@ -49,7 +49,8 @@ export default class MainScreen extends Component {
   saveStartedTimeEntryToState (response) {
     const startTime = new Date(response.data.start).getTime()
     this.setState({
-      startTime
+      startTime,
+      teId: response.data.id
     })
   }
 
@@ -67,7 +68,20 @@ export default class MainScreen extends Component {
       beacons
     })
     const nearest = minBy(beacons, 'distance')
-    if (nearest && !this.state.timeEntryRunning) {
+    if (nearest && nearest.name === 'Exit') {
+      if (this.state.timeEntryRunning) {
+        stopTimeEntry(this.state.teId)
+      }
+
+      if (this.state.beacon.name !== 'Exit') {
+        save(mapBeaconDate(this.state.beacon))
+        this.setState({
+          timeEntryRunning: false,
+          beacon: nearest,
+          teId: null
+        })
+      }
+    } else if (nearest && !this.state.timeEntryRunning) {
       this.startTimeEntry(nearest)
     } else if (nearest && this.state.beacon && this.state.beacon.id2 !== nearest.id2) {
       save(mapBeaconDate(this.state.beacon))
