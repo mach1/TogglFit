@@ -42,6 +42,7 @@ export default class MainScreen extends Component {
     this.onBeaconsUpdate = this.onBeaconsUpdate.bind(this)
     this.onManualStop = this.onManualStop.bind(this)
     this.saveStartedTimeEntryToState = this.saveStartedTimeEntryToState.bind(this)
+    this.updateTime = this.updateTime.bind(this)
   }
 
   saveStartedTimeEntryToState (response) {
@@ -54,8 +55,7 @@ export default class MainScreen extends Component {
   startTimeEntry (beacon) {
     this.setState({
       timeEntryRunning: true,
-      beacon,
-      startTime: Date.now()
+      beacon
     })
     startTimeEntry(beacon.name).then(this.saveStartedTimeEntryToState)
   }
@@ -85,15 +85,24 @@ export default class MainScreen extends Component {
     })
   }
 
+  updateTime () {
+    const { startTime } = this.state
+    this.setState({
+      time: getFormatedTime(startTime)
+    })
+  }
+
+  componentDidMount () {
+    setInterval(this.updateTime, 1000)
+  }
 
   render () {
     const {
       beacons,
       beacon,
-      startTime
+      time
     } = this.state
 
-    const time = getFormatedTime(startTime)
     const styles = getStyles(this.state)
 
     return (
