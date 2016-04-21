@@ -8,6 +8,7 @@ import React, {
 } from 'react-native'
 
 import { getStyles } from './ReportScreen.styles.js'
+import { get } from './ExcercisesApi.js'
 
 export default class ReportScreen extends Component {
   constructor (props) {
@@ -16,12 +17,14 @@ export default class ReportScreen extends Component {
 
   render () {
     const styles = getStyles(this.state)
-    const excercises = [
-      {
+    const excercises = get().map(beacon => {
+      console.log(beacon)
+      return {
+        ...beacon,
         image: require('./assets/images/Dumbbell-50.png'),
-        time: '20:45'
       }
-    ]
+    })
+    console.log(excercises)
 
     return (
       <View>
