@@ -16,6 +16,7 @@ import {
   startTimeEntry,
   stopTimeEntry
 } from './api/TogglApi.js'
+import ReportScreen from './ReportScreen.android.js'
 
 export default class MainScreen extends Component {
   constructor (props) {
@@ -138,7 +139,7 @@ export default class MainScreen extends Component {
 
     return (
       <View>
-      {toggl &&
+      {beacon.name !== 'Exit' &&
         <Animatable.View ref="view" transition='borderColor' easing='ease-out' style={styles.triggerBackground} >
             <TouchableOpacity activeOpacity={0.6} style={styles.trigger} onPress={this.onManualStop}>
               <Text style={styles.stationText}>
@@ -150,40 +151,8 @@ export default class MainScreen extends Component {
             </TouchableOpacity>
         </Animatable.View>
       }
-      {!toggl &&
-        <View>
-          <Text style={styles.reportLabel}>
-            APRIL, 25. 2016
-          </Text>
-          <View>
-            <View style={styles.report}>
-              <View style={styles.reportIcon}>
-                <Image
-                  source={require('./assets/images/Dumbbell-50.png')}
-                />
-              </View>
-              <View style={{ height: 10, borderRadius: 5, backgroundColor: '#04C5A6', marginTop: 20, marginLeft: 15, marginRight: 15, width: 200 }}>
-              </View>
-              <Text style={styles.reportTimer}>
-                20:45
-              </Text>
-            </View>
-          </View>
-          <View>
-            <View style={styles.report}>
-              <View style={styles.reportIcon}>
-                <Image
-                  source={require('./assets/images/Dumbbell-50.png')}
-                />
-              </View>
-              <View style={{ height: 10, borderRadius: 5, backgroundColor: '#04C5A6', marginTop: 20, marginLeft: 15, marginRight: 15, width: 100 }}>
-              </View>
-              <Text style={styles.reportTimer}>
-                13:45
-              </Text>
-            </View>
-          </View>
-        </View>
+      {beacon.name === 'Exit' &&
+        <ReportScreen />
       }
       </View>
     )
