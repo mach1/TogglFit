@@ -47,8 +47,8 @@ class TogglFit extends Component {
     if (this.state.showSplashScreen) {
       return (
         <Image
-          source={require('./assets/images/splash-screen.png')}
-          style={styles.backgroundImage}
+          source={require('./assets/images/splash-screen-text.png')}
+          style={styles.splashImage}
         />
       )
     } else {
@@ -75,6 +75,11 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     backgroundColor: 'black',
   },
+  titleText: {
+    color: 'white',
+    fontFamily: 'Helvetica Neue Light',
+    fontSize: 24
+  },
   backgroundImage: {
     flex: 1,
     position: 'absolute',
@@ -86,6 +91,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     resizeMode: Image.resizeMode.cover,
     opacity: 0.5,
+    width: null,
+    height: null
+  },
+  splashImage: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: Image.resizeMode.cover,
     width: null,
     height: null
   },
