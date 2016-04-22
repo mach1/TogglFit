@@ -34,7 +34,7 @@ export default class ReportScreen extends Component {
             excercises.map(excercise => {
               const width = (excercise.rawTime * 200 / maxTime)
               return (
-                <View>
+                <View key={excercise.key}>
                   <View style={styles.report}>
                     <View style={styles.reportIcon}>
                       <Image

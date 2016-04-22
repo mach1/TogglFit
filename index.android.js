@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     resizeMode: Image.resizeMode.cover,
-    opacity: 0.3,
+    opacity: 0.5,
     width: null,
     height: null
   },
