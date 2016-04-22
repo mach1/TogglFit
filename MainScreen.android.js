@@ -58,6 +58,7 @@ export default class MainScreen extends Component {
   startTimeEntry (beacon) {
     const excercise = excerciseData[beacon.name]
     this.props.onImageChange(excercise.image)
+    this.onManualStop()
     this.setState({
       timeEntryRunning: true,
       beacon
@@ -98,9 +99,7 @@ export default class MainScreen extends Component {
   }
 
   onManualStop () {
-    this.refs.view.bounce(800).then((endState) => {
-      this.setState({borderColor: this.state.borderColor == 'green' ? 'red' : 'green'})
-    })
+    this.refs.view.bounce(800)
   }
 
   updateTime () {
