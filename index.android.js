@@ -18,18 +18,34 @@ import MainScreen from './MainScreen'
 import { start } from './api/BeaconsApi.js'
 
 class TogglFit extends Component {
+  constructor (props) {
+    super(props)
+    this.onImageChange = this.onImageChange.bind(this)
+
+    this.state = {}
+  }
+
   componentWillMount () {
     start()
+  }
+
+  onImageChange (image) {
+    this.setState({
+      image
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Image
-          source={require('./assets/images/bg-row.png')}
+          source={this.state.image}
           style={styles.backgroundImage}
         />
-        <MainScreen style={styles.trigger} />
+        <MainScreen
+          style={styles.trigger}
+          onImageChange={this.onImageChange}
+        />
       </View>
     );
   }
@@ -44,7 +60,6 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -52,8 +67,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    resizeMode: Image.resizeMode.contain,
-    opacity: 0.3
+    resizeMode: Image.resizeMode.cover,
+    opacity: 0.3,
+    width: null,
+    height: null
   },
   welcome: {
     fontSize: 20,

@@ -19,6 +19,7 @@ import {
 import ReportScreen from './ReportScreen.android.js'
 import { getStyles } from './MainScreen.styles.js'
 import { save } from './ExcercisesApi.js'
+import { excerciseData } from './ExcerciseData.js'
 
 const getFormatedTime = (startTime) => {
   const seconds = moment().diff(startTime, 'seconds')
@@ -55,6 +56,8 @@ export default class MainScreen extends Component {
   }
 
   startTimeEntry (beacon) {
+    const excercise = excerciseData[beacon.name]
+    this.props.onImageChange(excercise.image)
     this.setState({
       timeEntryRunning: true,
       beacon

@@ -9,8 +9,8 @@ import Beacons from 'react-native-beacons-android'
 let listeners = []
 
 const stations = {
-  '0xebb0': { name: 'Barbell press' },
-  '0x08e5': { name: 'Squats' },
+  '0xebb0': { name: 'Burpees' },
+  '0x08e5': { name: 'Dips' },
   '0x5fbf': { name: 'Exit' }
 }
 
