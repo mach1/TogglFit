@@ -28,7 +28,7 @@ export default class ReportScreen extends Component {
       <View>
         <View>
           <Text style={styles.reportLabel}>
-            APRIL, 25. 2016
+            APRIL, 22. 2016
           </Text>
           {
             excercises.map(excercise => {

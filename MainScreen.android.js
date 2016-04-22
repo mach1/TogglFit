@@ -30,7 +30,7 @@ const mapBeaconDate = (beacon) => {
   return {
     time: getFormatedTime(beacon.time),
     rawTime: moment().diff(beacon.time, 'seconds'),
-    icon: excerciseData[beacon.name].icon
+    icon: (excerciseData[beacon.name] || {}).icon
   }
 }
 

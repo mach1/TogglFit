@@ -21,12 +21,20 @@ class TogglFit extends Component {
   constructor (props) {
     super(props)
     this.onImageChange = this.onImageChange.bind(this)
+    this.hideSplashScreen = this.hideSplashScreen.bind(this)
 
-    this.state = {}
+    this.state = {
+      showSplashScreen: true
+    }
+
+    setTimeout(this.hideSplashScreen, 10000)
   }
 
-  componentWillMount () {
+  hideSplashScreen () {
     start()
+    this.setState({
+      showSplashScreen: false
+    })
   }
 
   onImageChange (image) {
@@ -36,18 +44,27 @@ class TogglFit extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
+    if (this.state.showSplashScreen) {
+      return (
         <Image
-          source={this.state.image}
+          source={require('./assets/images/splash-screen.png')}
           style={styles.backgroundImage}
         />
-        <MainScreen
-          style={styles.trigger}
-          onImageChange={this.onImageChange}
-        />
-      </View>
-    );
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <Image
+            source={this.state.image}
+            style={styles.backgroundImage}
+          />
+          <MainScreen
+            style={styles.trigger}
+            onImageChange={this.onImageChange}
+          />
+        </View>
+      )
+    }
   }
 }
 
