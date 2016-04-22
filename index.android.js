@@ -47,7 +47,7 @@ class TogglFit extends Component {
     if (this.state.showSplashScreen) {
       return (
         <Image
-          source={require('./assets/images/splash-screen-text.png')}
+          source={require('./assets/images/toggl-fit-splash.png')}
           style={styles.splashImage}
         />
       )
