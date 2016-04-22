@@ -29,7 +29,8 @@ const getFormatedTime = (startTime) => {
 const mapBeaconDate = (beacon) => {
   return {
     time: getFormatedTime(beacon.time),
-    rawTime: moment().diff(beacon.time, 'seconds')
+    rawTime: moment().diff(beacon.time, 'seconds'),
+    icon: excerciseData[beacon.name].icon
   }
 }
 
@@ -99,7 +100,9 @@ export default class MainScreen extends Component {
   }
 
   onManualStop () {
-    this.refs.view.bounce(800)
+    if (this.refs.view) {
+      this.refs.view.bounce(800)
+    }
   }
 
   updateTime () {
